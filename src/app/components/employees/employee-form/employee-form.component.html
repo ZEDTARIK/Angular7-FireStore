@@ -1,0 +1,56 @@
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Employee Form</h3>
+    </div>
+    <div class="panel-body">
+
+      <div class="form-group" [ngClass]="{'has-error': formErros.fullName }">
+        <label for="fullName" class="col-sm-2 control-label">Full Name</label>
+        <div class="col-sm-6">
+          <input type="text" id="fullName" class="form-control" placeholder="Full Name" (blur)="logValidationErrors()"
+            formControlName="fullName">
+        </div>
+        <div class="col-sm-4" *ngIf="formErros.fullName">
+          <span class="help-block">{{formErros.fullName}}</span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error': formErros.emailEmp }">
+        <label for="emailEmp" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-6">
+          <input type="text" id="emailEmp" class="form-control" placeholder="Email" formControlName="emailEmp"
+            (blur)="logValidationErrors()">
+        </div>
+        <div class="col-sm-4" *ngIf="formErros.emailEmp">
+          <span class="help-block">{{formErros.emailEmp}}</span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error': formErros.phone }">
+        <label for="phone" class="col-sm-2 control-label">Phone</label>
+        <div class="col-sm-6">
+          <input type="text" id="phone" class="form-control" placeholder="phone" formControlName="phone"
+            (blur)="logValidationErrors()">
+        </div>
+        <div class="col-sm-4" *ngIf="formErros.phone">
+          <span class="help-block">{{formErros.phone}}</span>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="panel-footer">
+      <div class="btn-toolbar">
+        <button type="submit" [disabled]="!employeeForm.valid" class="btn btn-primary">Save</button>
+        <button (click)="onLoadData()" type="button" class="btn btn-primary">Load Data</button>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<pre>
+  {{employeeForm.value | json }}
+</pre>
