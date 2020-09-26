@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { AppComponent } from './app.component';
 import { EmployeesComponent } from './components/employees/employees.component';
@@ -23,9 +24,10 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.config),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFirestoreModule
   ],
-  providers: [],
+  providers: [AngularFireModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

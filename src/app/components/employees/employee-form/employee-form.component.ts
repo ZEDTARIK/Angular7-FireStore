@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from 'src/app/core/employee.service';
-
+import { Employee } from '../../../core/employee';
 @Component({
   selector: 'app-employee-form',
   templateUrl: './employee-form.component.html',
@@ -10,6 +10,7 @@ import { EmployeeService } from 'src/app/core/employee.service';
 export class EmployeeFormComponent implements OnInit {
 
   employeeForm: FormGroup;
+  employeeId = null;
 
   validationMessages = {
     fullName: {
@@ -63,10 +64,21 @@ export class EmployeeFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    console.log(this.employeeForm.value);
+  onSubmit(employeeForm: FormGroup = this.employeeForm) {
+    const EmployeeData = JSON.parse(JSON.stringify(this.employeeForm.value));
+    if (employeeForm.valid) {
+      if (this.employeeId == null) {
+        this.employeeService.insertEmployee(EmployeeData);
+      } else {
+        this.employeeService.updateEmployee(this.employeeId, EmployeeData);
+      }
+    }
+    this.onResetForm(employeeForm);
   }
 
+  onResetForm(employeeForm?: FormGroup): void {
+    employeeForm.reset();
+  }
   onLoadData(): void {
     this.employeeForm.setValue({
       fullName: 'Zouhair ETTARAK',

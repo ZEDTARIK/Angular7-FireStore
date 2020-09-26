@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireList } from 'angularfire2/database';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Employee } from './employee';
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +11,18 @@ export class EmployeeService {
 
   EmployeeList: AngularFireList<Employee>;
 
-  constructor(private firebase: AngularFireDatabase) { }
+  constructor(private firebase: AngularFirestore) { }
 
   getData() {
-    this.EmployeeList = this.firebase.list('Angular7-FireStore');
-    return this.EmployeeList;
+    return this.firebase.collection('Angular7-FireStore').snapshotChanges();
   }
 
   insertEmployee(employee: Employee) {
-    this.EmployeeList.push({
-      fullName: employee.fullName,
-      emailEmp: employee.emailEmp,
-      phone: employee.phone
-    });
+    return this.firebase.collection('Angular7-FireStore').add(employee);
+  }
+
+  updateEmployee(employeeId, employee: Employee) {
+    //delete employee;
+    this.firebase.doc('Angular7-FireStore/' + employeeId).update(employee);
   }
 }
