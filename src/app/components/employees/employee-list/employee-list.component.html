@@ -11,7 +11,13 @@
           <th>Action</th>
         </tr>
       </thead>
-     
+     <tbody>
+       <tr *ngFor="let employee of employees">
+         <td> {{employee.fullName}} </td>
+         <td> {{employee.emailEmp}} </td>
+         <td> {{employee.phone}} </td>
+       </tr>
+     </tbody>
     </table>
   </div>
 </div>
