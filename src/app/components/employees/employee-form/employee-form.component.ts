@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { EmployeeService } from 'src/app/core/employee.service';
 import { Employee } from '../../../core/employee';
 @Component({
@@ -34,7 +35,9 @@ export class EmployeeFormComponent implements OnInit {
   };
 
 
-  constructor(private fb: FormBuilder, private employeeService: EmployeeService) { }
+  constructor(private fb: FormBuilder, 
+              private employeeService: EmployeeService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.employeeForm = this.fb.group({
@@ -69,8 +72,10 @@ export class EmployeeFormComponent implements OnInit {
     if (employeeForm.valid) {
       if (this.employeeId == null) {
         this.employeeService.insertEmployee(EmployeeData);
+        this.toastr.success('Employee SuccessFully Inserted');
       } else {
         this.employeeService.updateEmployee(this.employeeId, EmployeeData);
+        this.toastr.info('Employee Has Updated SuccessFully');
       }
     }
     this.onResetForm(employeeForm);
